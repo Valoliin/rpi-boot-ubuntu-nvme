@@ -24,7 +24,8 @@ Avant d’exécuter le script, assure-toi d’avoir les outils suivants install�
 
 ```bash
 sudo apt update
-sudo apt install -y curl wget xz-utils parted util-linux
+sudo apt update && sudo apt install -y wget curl xz-utils util-linux mount cloud-init
+
 ````
 
 ---
