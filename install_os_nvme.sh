@@ -100,6 +100,24 @@ if [ "$confirm" != "oui" ]; then
   exit 1
 fi
 
+# Création des fichiers cloud-init avant flash
+echo "🛠️ Injection du mot de passe utilisateur dans l'image..."
+
+LOOP_DEV=$(sudo losetup --show -Pf "$TMP_IMG")
+
+sleep 1
+sudo mkdir -p /mnt/img_boot
+sudo mount "${LOOP_DEV}p1" /mnt/img_boot
+
+# Injecter user-data et meta-data
+echo "$USER_DATA" | sudo tee /mnt/img_boot/user-data > /dev/null
+sudo touch /mnt/img_boot/meta-data
+
+sudo umount /mnt/img_boot
+sudo losetup -d "$LOOP_DEV"
+
+echo "✅ Mot de passe 'rpicrof' injecté dans l'image pour l'utilisateur 'ubuntu'."
+
 # Flash
 echo "💾 Flash de $OS_NAME sur le SSD..."
 dd if="$TMP_IMG" of="$DISK" bs=4M status=progress conv=fsync
