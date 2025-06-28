@@ -107,9 +107,5 @@ dd if="$TMP_IMG" of="$DISK" bs=4M status=progress conv=fsync
 echo "✅ Flash terminé. Synchronisation..."
 sync
 
-# Boot order
-echo "🔧 Configuration du Raspberry Pi pour booter sur le SSD NVMe..."
-raspi-config nonint do_boot_order 1
-
 echo "✅ Le Raspberry Pi est maintenant prêt à booter sur le SSD NVMe."
 echo "⏏️ Tu peux maintenant éteindre le Raspberry Pi, retirer la carte SD et redémarrer sur le SSD."
