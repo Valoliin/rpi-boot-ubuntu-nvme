@@ -68,7 +68,66 @@ sudo ./install_os_nvme.sh
 * Assure-toi que ton HAT NVMe est compatible avec le Raspberry Pi 5.
 * Si tu veux flasher une autre distribution (DietPi, Debian, etc.), choisis l'option 3 dans le script.
 
+### 📦 Le SSD est détecté, mais sa taille est de 0 octet
+
+Si tu vois quelque chose comme :
+```bash
+nvme0n1     259:0    0     0B  0 disk
+````
+
+Cela signifie que le SSD est bien présent électriquement, mais **mal initialisé**.
+
+### 🔧 Solutions recommandées :
+
 ---
+
+### ⚙️ 1. Active le PCIe et ajuste la configuration
+
+Ajoute les lignes suivantes à ton fichier `/boot/firmware/config.txt` :
+
+```ini
+dtparam=nvme
+dtparam=pciex1_gen=2
+```
+
+Et édite la configuration de l’EEPROM :
+
+```bash
+sudo rpi-eeprom-config --edit
+```
+
+Ajoute ou modifie les lignes suivantes :
+
+```
+PCIE_PROBE=1
+BOOT_ORDER=0xf416
+```
+
+Puis applique :
+
+```bash
+sudo rpi-eeprom-update -a
+sudo reboot
+```
+
+---
+
+### 🔄 2. Forcer un rescan du bus PCIe après le démarrage
+
+Si le SSD est toujours absent ou à 0 B, essaie cette commande :
+
+```bash
+echo 1 | sudo tee /sys/bus/pci/rescan
+```
+
+Cela relance la détection PCIe, et permet parfois de "réveiller" le SSD.
+
+---
+
+### ✅ Si après ça le SSD fait bien 128 Go...
+
+Tu peux relancer le script et tout fonctionnera correctement !
+
 
 ## 🧠 Auteur
 
