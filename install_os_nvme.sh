@@ -100,6 +100,21 @@ if [ "$confirm" != "oui" ]; then
   exit 1
 fi
 
+USER_DATA=$(cat <<EOF
+#cloud-config
+users:
+  - name: ubuntu
+    groups: sudo
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    lock_passwd: false
+    plain_text_passwd: 'rpicrof'
+ssh_pwauth: true
+disable_root: true
+EOF
+)
+
+
 # Création des fichiers cloud-init avant flash
 echo "🛠️ Injection du mot de passe utilisateur dans l'image..."
 
