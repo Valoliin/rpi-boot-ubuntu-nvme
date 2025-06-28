@@ -11,6 +11,9 @@
   - **Ubuntu MATE 22.04.5 LTS** (robot version 2025)
   - **Ubuntu 24.04.2 Server LTS** (robot version 2026)
   - Ou une image personnalisée depuis une **URL ou un chemin local**.
+- Injecte automatiquement un compte utilisateur dans l’image :
+    Nom d’utilisateur : ubuntu
+    Mot de passe : rpicrof
 - Télécharge et décompresse l’image si nécessaire.
 - Flashe l’image sur le SSD NVMe.
 - Configure le Raspberry Pi pour démarrer depuis le SSD.
