@@ -34,7 +34,9 @@ sudo apt install -y curl wget xz-utils parted util-linux
 Exécute cette commande sur le Pi 5 avec la carte SD :
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/Valoliin/rpi-boot-ubuntu-nvme/main/install_os_nvme.sh | sudo bash
+curl -sSL https://raw.githubusercontent.com/Valoliin/rpi-boot-ubuntu-nvme/main/install_os_nvme.sh -o install_os_nvme.sh
+chmod +x install_os_nvme.sh
+sudo ./install_os_nvme.sh
 ```
 
 ---
