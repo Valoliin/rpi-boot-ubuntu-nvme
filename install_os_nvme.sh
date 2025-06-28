@@ -16,6 +16,17 @@ if [ -z "$NVME_DEV" ]; then
 fi
 
 DISK="/dev/$NVME_DEV"
+# Vérification de la capacité détectée du disque
+NVME_SIZE=$(lsblk -b -dn -o SIZE "/dev/$NVME_DEV")
+
+if [ "$NVME_SIZE" -eq 0 ]; then
+  echo "❌ Le SSD NVMe est détecté, mais sa capacité est de 0 octet."
+  echo "Cela signifie qu'il est mal initialisé ou mal alimenté."
+  echo "👉 Consulte la section dépannage du README à l'adresse suivante :"
+  echo "   https://github.com/Valoliin/rpi-boot-ubuntu-nvme#-dépannage"
+  exit 1
+fi
+
 echo "✅ Disque NVMe détecté : $DISK"
 
 # Choix de l'image
